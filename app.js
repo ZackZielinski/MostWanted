@@ -49,7 +49,6 @@ function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
   var testOne = mainObjectList();
-  var person = [firstName,lastName];
     testOne.filter(function(el){
       for (var i = 0; i < testOne.length; i++) {
         if(testOne[i].firstName === firstName && testOne[i].lastName === lastName){
@@ -71,8 +70,8 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + testOne[].firstName + "\n";
-  personInfo += "Last Name: " + testOne[].lastName + "\n";
+  var personInfo = "First Name: " + person.firstName + "\n";
+  personInfo += "Last Name: " + person.lastName + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
