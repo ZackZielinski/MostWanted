@@ -1,3 +1,4 @@
+function mainObjectList(){
 const data = [
 	{
 		"id": 272822514,
@@ -286,3 +287,5 @@ const data = [
 		"currentSpouse": null
 	}
 ];
+return data;
+}
