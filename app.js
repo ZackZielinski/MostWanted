@@ -1,8 +1,8 @@
-function app(people){
+function app(person){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
-      searchByName(people);
+      searchByName(person);
     break;
     case 'no':
     // TODO: search by traits
@@ -45,15 +45,18 @@ function mainMenu(person, people){
   }
 }
 
-function searchByName(people){
+function searchByName(person){
+  //IS CASE SESITIVE
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
   var testOne = mainObjectList();
     testOne.filter(function(el){
       for (var i = 0; i < testOne.length; i++) {
         if(testOne[i].firstName === firstName && testOne[i].lastName === lastName){
-          displayPerson(person);
+          var person = testOne[i];
+          displayPerson(person, testOne);
         }
+        break
       }
     });
   // TODO: find the person using the name they entered
@@ -63,17 +66,24 @@ function searchByName(people){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
+    return person.firstName + ' ' + person.lastName;
   }).join("\n"));
 }
 
-function displayPerson(person){
+function displayPerson(person, testOne){
+  var personAttributes = "Gender: " + person.gender + "\n";
+  personAttributes += "Date of birth: " + person.dob + "\n";
+  personAttributes += "Height: " + person.height + "\n";
+  personAttributes += "Weight: " + person.weight + "\n";
+  personAttributes += "Eye color: " + person.eyeColor + "\n";
+  personAttributes += "Occupation: " + person.occupation;
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
+  alert(personAttributes);
 }
 
 // function that prompts and validates user input
