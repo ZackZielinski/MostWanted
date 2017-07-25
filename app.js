@@ -129,9 +129,9 @@ function searchByTrait(){
 
 		case 'eye color':
 			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
-
 			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
 			MostWanted.searchByEyes = eyeResult;
+
 		
 
 
@@ -148,6 +148,8 @@ function searchByTrait(){
 
 
 
+
+    
 
     break;
 		case 'height':
