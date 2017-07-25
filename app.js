@@ -241,7 +241,7 @@ function searchByTrait(){
 
 			var ageResult = data.filter(x => x.dob === birthDate);
 			MostWanted.searchByBirthDate = ageResult;
-      findAge(MostWanted.searchByBirthDate);
+      findAge();
 
 
 		break;
@@ -250,3 +250,54 @@ function searchByTrait(){
 		app();
 	}
 } 
+
+function findAge(){
+    var currentDate = prompt("Enter the current date (Ex: 04/08/2017)");
+  
+     var calander = currentDate.split('/');
+  
+     MostWanted.userMonth = calander[0];
+     MostWanted.userDate = calander[1];
+     MostWanted.userYear = calander[2];
+  
+     databaseBirthDate(currentDate);
+  
+ } 
+ 
+ 
+ function databaseBirthDate(currentDate){
+ 
+       // var  testOne = data.filter(x => x.dob === x.dob);
+
+      var dobArray  = [];
+       // var i = 0;
+ 
+      var testTwo = data.map(function(x){
+          var dateOfBirth = x.dob;
+          dobArray.push(dateOfBirth);
+      });
+/*
+       var dataBirthDate = dobArray.split('/');
+ 
+       MostWanted.dataMonth = dataBirthDate[0];
+       MostWanted.dataDate = dataBirthDate[1];
+       MostWanted.dataYear = dataBirthDate[2];
+ */
+      // calculateDateOfBirth();
+ }
+ 
+ // function calculateDateOfBirth(){
+ 
+ //   var age = MostWanted.userYear - MostWanted.dataYear;
+ 
+ //   if (MostWanted.userMonth >= MostWanted.dataMonth){
+ //     if (MostWanted.userDate >= MostWanted.dataDate){
+ //       age++;
+ //       return age;
+ //     }
+ //   }
+ //   else{
+ //     return age;
+ //   }
+ 
+ // } 
