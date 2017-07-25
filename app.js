@@ -1,8 +1,10 @@
+var MostWanted = {};
+
 function app(person){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
-      searchByName(person);
+      MostWanted.CurrentPerson = searchByName();
     break;
     case 'no':
     // TODO: search by traits
@@ -45,22 +47,30 @@ function mainMenu(person, people){
   }
 }
 
-function searchByName(person){
+function searchByName(){
   //IS CASE SESITIVE
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
-  var testOne = mainObjectList();
-    testOne.filter(function(el){
-      for (var i = 0; i < testOne.length; i++) {
-        if(testOne[i].firstName === firstName && testOne[i].lastName === lastName){
-          var person = testOne[i];
-          displayPerson(person, testOne);
-        }
-        break
-      }
-    });
-  // TODO: find the person using the name they entered
+  
+//FOR LOOP AND MAKE COMPARE INDEX
+    /*if(){
+      displayPerson(person, testOne);
+    }*/
 
+    var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
+    return results[0];
+/*
+    var results = data.filter(function(el){
+      
+        if(el.firstName === firstName && el.lastName === lastName){
+          return true;
+        }
+        else{
+          return false;
+        }
+    });
+    var tempPerson = results[0];*/
+  // TODO: find the person using the name they entered
 }
 
 // alerts a list of people
