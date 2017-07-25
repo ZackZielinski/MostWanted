@@ -129,9 +129,26 @@ function searchByTrait(){
 
 		case 'eye color':
 			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
-
 			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
 			MostWanted.searchByEyes = eyeResult;
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByEyes.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByEyes.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
+      //for (var i = 0; i < MostWanted.searchByEyes.length; i++) {
+
+      //futureAlert += MostWanted.searchByEyes[i]
 
 		break;
 		case 'height':
@@ -143,16 +160,8 @@ function searchByTrait(){
 		break;
 		case 'weight':
 			var weightEntered = prompt("Enter the person's weight");
-
 			var heightResult = data.filter(x => x.weight === weight);
 			MostWanted.searchByWeight = weightResult;
-
-		break;		case 'eye color':
-			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
-
-			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
-			MostWanted.searchByEyes = eyeResult;
-
 		break;
 	}
 }
