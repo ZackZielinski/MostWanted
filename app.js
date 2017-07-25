@@ -83,6 +83,7 @@ function searchByName(){
 function displayPeople(people){
   alert(people.map(function(person){
     return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
+    
   }).join("\n"));
 }
 
@@ -170,25 +171,69 @@ function searchByTrait(){
     break;
 		case 'height':
 			var heightEntered = prompt("Enter the person's height (Number only)");
-
-			var heightResult = data.filter(x => x.height === heightEntered);
+			var heightResult = data.filter(x => x.height == heightEntered);
 			MostWanted.searchByHeight = heightResult;
+
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByHeight.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByHeight.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
 
 		break;
 		case 'weight':
 			var weightEntered = prompt("Enter the person's weight");
-			var heightResult = data.filter(x => x.weight === weight);
+			var weightResult = data.filter(x => x.weight == weightEntered);
 			MostWanted.searchByWeight = weightResult;
 
-			var height = data.filter(x => x.weight === weightEntered);
-			MostWanted.searchByWeight = weightResult;
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByWeight.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByWeight.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
+
 
 		break;
 		case 'occupation':
 			var employment = prompt("Enter the person's occupation");
-
 			var employmentResult = data.filter(x => x.occupation === employment);
 			MostWanted.searchByOccupation = employmentResult;
+
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByOccupation.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByOccupation.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
 
 		break;
 		case 'age':
@@ -205,14 +250,3 @@ function searchByTrait(){
 		app();
 	}
 } 
-
-function findAge(birthDateEntered){
-	var currentDate = prompt("Enter the current date (Ex: 04/08/2017)");
-
-    currentDate.split('/');
-
-    var month = currentDate.splice(-1,0).;
-
-    var birthMonth = birthDateEntered.dob.splice(-1, 0,);
-
-}
