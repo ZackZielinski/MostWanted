@@ -156,13 +156,13 @@ function searchByTrait(){
 		case 'height':
 			var heightEntered = prompt("Enter the person's height (Number only)");
 
-			var heightResult = data.filter(x => x.height === heightEntered);
+			var heightResult = data.filter(x => x.height == heightEntered);
 			MostWanted.searchByHeight = heightResult;
 
 		break;
 		case 'weight':
 			var weightEntered = prompt("Enter the person's weight");
-			var heightResult = data.filter(x => x.weight === weight);
+			var heightResult = data.filter(x => x.weight == weight);
 			MostWanted.searchByWeight = weightResult;
 
 			var height = data.filter(x => x.weight === weightEntered);
@@ -181,7 +181,7 @@ function searchByTrait(){
 
 			var ageResult = data.filter(x => x.dob === birthDate);
 			MostWanted.searchByBirthDate = ageResult;
-      findAge(MostWanted.searchByBirthDate);
+      findAge();
 
 
 		break;
@@ -191,13 +191,44 @@ function searchByTrait(){
 	}
 } 
 
-function findAge(birthDateEntered){
+function findAge(){
 	var currentDate = prompt("Enter the current date (Ex: 04/08/2017)");
 
-    currentDate.split('/');
+    var calander = currentDate.split('/');
 
-    var month = currentDate.splice(-1,0).;
+    MostWanted.userMonth = calander[0];
+    MostWanted.userDate = calander[1];
+    MostWanted.userYear = calander[2];
 
-    var birthMonth = birthDateEntered.dob.splice(-1, 0,);
+    databaseBirthDate();
 
 }
+
+function databaseBirthDate(){
+
+      MostWanted.searchByBirthDate;
+
+      databirthDate = databaseCalander.split('/');
+
+      MostWanted.dataMonth = databirthDate[0];
+      MostWanted.dataDate = databirthDate[1];
+      MostWanted.dataYear = databirthDate[2];
+
+     // calculateDateOfBirth();
+}
+
+// function calculateDateOfBirth(){
+
+//   var age = MostWanted.userYear - MostWanted.dataYear;
+
+//   if (MostWanted.userMonth >= MostWanted.dataMonth){
+//     if (MostWanted.userDate >= MostWanted.dataDate){
+//       age++;
+//       return age;
+//     }
+//   }
+//   else{
+//     return age;
+//   }
+
+// }
