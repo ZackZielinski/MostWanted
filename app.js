@@ -83,7 +83,7 @@ function searchByName(){
 function displayPeople(people){
   alert(people.map(function(person){
     return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
-    
+
   }).join("\n"));
 }
 
