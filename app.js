@@ -4,10 +4,13 @@ function app(person){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
-      MostWanted.CurrentPerson = searchByName();
+      MostWanted.currentPerson = searchByName();
     break;
     case 'no':
     // TODO: search by traits
+
+
+
     break;
     default:
     app(people); // restart app
@@ -16,19 +19,20 @@ function app(person){
 }
 
 // Menu function to call once you find who you are looking for
-function mainMenu(person, people){
+function mainMenu(){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){
+  if(!MostWanted.currentPerson){
     alert("Could not find that individual.");
-    return app(people); // restart
+    return app(); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + MostWanted.currentPerson.firstName + " " + MostWanted.currentPerson.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
+     displayPerson();
     // TODO: get person's info
     break;
     case "family":
@@ -38,7 +42,7 @@ function mainMenu(person, people){
     // TODO: get person's descendants
     break;
     case "restart":
-    app(people); // restart
+    app(); // restart
     break;
     case "quit":
     return; // stop execution
@@ -52,13 +56,13 @@ function searchByName(){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
   
-//FOR LOOP AND MAKE COMPARE INDEX
     /*if(){
       displayPerson(person, testOne);
     }*/
 
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
-    return results[0];
+    MostWanted.currentPerson = results[0];
+    mainMenu();
 /*
     var results = data.filter(function(el){
       
@@ -76,11 +80,12 @@ function searchByName(){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    return person.firstName + ' ' + person.lastName;
+    return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
   }).join("\n"));
 }
 
-function displayPerson(person, testOne){
+function displayPerson(){
+  var person = MostWanted.currentPerson;
   var personAttributes = "Gender: " + person.gender + "\n";
   personAttributes += "Date of birth: " + person.dob + "\n";
   personAttributes += "Height: " + person.height + "\n";
@@ -94,6 +99,7 @@ function displayPerson(person, testOne){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
   alert(personAttributes);
+  mainMenu();
 }
 
 // function that prompts and validates user input
