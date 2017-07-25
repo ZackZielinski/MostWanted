@@ -7,14 +7,9 @@ function app(person){
       MostWanted.currentPerson = searchByName();
     break;
     case 'no':
-<<<<<<< HEAD
+
       MostWanted.searchTrait = searchByTrait();
-=======
     // TODO: search by traits
-
-
-
->>>>>>> cbf759eb9f221415969ee0c7f7b6e38f8d180eb9
     break;
     default:
     app(people); // restart app
@@ -59,13 +54,10 @@ function searchByName(){
   //IS CASE SESITIVE
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
-  
-<<<<<<< HEAD
 
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
     return results[0];
 
-=======
     /*if(){
       displayPerson(person, testOne);
     }*/
@@ -85,7 +77,6 @@ function searchByName(){
     });
     var tempPerson = results[0];*/
   // TODO: find the person using the name they entered
->>>>>>> cbf759eb9f221415969ee0c7f7b6e38f8d180eb9
 }
 
 
@@ -130,5 +121,38 @@ function chars(input){
   return true;
 }
 
-var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
-   return results[0];
+function searchByTrait(){
+
+	var trait = prompt("What do you know of the person? Enter age, eye color, height, weight or occupation");
+
+	switch (trait){
+
+		case 'eye color':
+			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
+
+			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
+			MostWanted.searchByEyes = eyeResult;
+
+		break;
+		case 'height':
+			var heightEntered = prompt("Enter the person's height");
+
+			var heightResult = data.filter(x => x.height === height);
+			MostWanted.searchByHeight = heightResult;
+
+		break;
+		case 'weight':
+			var weightEntered = prompt("Enter the person's weight");
+
+			var heightResult = data.filter(x => x.weight === weight);
+			MostWanted.searchByWeight = weightResult;
+
+		break;		case 'eye color':
+			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
+
+			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
+			MostWanted.searchByEyes = eyeResult;
+
+		break;
+	}
+}
