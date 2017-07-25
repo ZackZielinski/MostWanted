@@ -132,27 +132,66 @@ function searchByTrait(){
 
 			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
 			MostWanted.searchByEyes = eyeResult;
+		
 
-		break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    break;
 		case 'height':
-			var heightEntered = prompt("Enter the person's height");
+			var heightEntered = prompt("Enter the person's height (Number only)");
 
-			var heightResult = data.filter(x => x.height === height);
+			var heightResult = data.filter(x => x.height === heightEntered);
 			MostWanted.searchByHeight = heightResult;
 
 		break;
 		case 'weight':
 			var weightEntered = prompt("Enter the person's weight");
 
-			var heightResult = data.filter(x => x.weight === weight);
+			var height = data.filter(x => x.weight === weightEntered);
 			MostWanted.searchByWeight = weightResult;
 
-		break;		case 'eye color':
-			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
+		break;
+		case 'occupation':
+			var employment = prompt("Enter the person's occupation");
 
-			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
-			MostWanted.searchByEyes = eyeResult;
+			var employmentResult = data.filter(x => x.occupation === employment);
+			MostWanted.searchByOccupation = employmentResult;
 
 		break;
+		case 'age':
+			var birthDate = prompt("Enter the person's Date of Birth (Ex: 07/05/1978)")
+
+			var ageResult = data.filter(x => x.dob === birthDate);
+			MostWanted.searchByBirthDate = ageResult;
+      findAge(MostWanted.searchByBirthDate);
+
+		break;
+		default:
+		alert("Sorry, that is not a valid character trait. Please try again");
+		app();
 	}
+} 
+
+function findAge(birthDateEntered){
+	var currentDate = prompt("Enter the current date (Ex: 04/08/2017)");
+
+    currentDate.split('/');
+
+    var month = currentDate.splice(-1,0).;
+
+    var birthMonth = birthDateEntered.dob.splice(-1, 0,);
+
 }
