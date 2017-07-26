@@ -35,6 +35,7 @@ function mainMenu(){
     // TODO: get person's info
     break;
     case "family":
+    displayFamily();
     // TODO: get person's family
     break;
     case "descendants":
@@ -47,7 +48,7 @@ function mainMenu(){
     case "quit":
     return; // stop execution
     default:
-    return mainMenu(person, people); // ask again
+    return mainMenu(); // ask again
   }
 }
 
@@ -83,7 +84,6 @@ function searchByName(){
 
 
 function displayDescendants(){
-
  MostWanted.currentPerson.map(function(x){
   currentPersonId = x.id; 
  });
@@ -114,13 +114,70 @@ var alertOfDescendants = '';
   alert(alertOfDescendants);
 }
 /*
->>>>>>> 46849cd8205cc092f6b6dd0ecce6ad2fdb7033de
 function displayPeople(people){
   alert(people.map(function(person){
     return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
 
   }).join("\n"));
 }*/
+
+function displayFamily(){
+//CHILDREN
+  MostWanted.currentPerson.map(function(x){
+    currentPersonId = x.id; 
+ });
+
+var stringOfDescendants = ''; 
+  data.map(function(x){
+    if(x.parents.length === 2){
+      var parentOne = x.parents[0];
+      var parentTwo = x.parents[1];
+    }
+
+    else if(x.parents.length === 1){
+      var parentOne = x.parents[0];
+    }
+
+    if(currentPersonId === parentOne){
+      var childOneName = x.firstName + ' ' + x.lastName;
+      stringOfDescendants += childOneName + '\n';
+    }
+    if(currentPersonId === parentTwo){
+      var childTwoName = x.firstName + ' ' + x.lastName;
+      stringOfDescendants += childTwoName + '\n';
+    }
+  });
+//SPOUSE
+
+  MostWanted.currentPerson.map(function(x){
+    currentSpouseId = x.currentSpouse;
+  });
+
+var holdCurrentSpouse = '';
+  data.map(function(x){
+    var currentSpouse = x.id;
+    if(currentSpouseId == currentSpouse){
+      var spouseName = x.firstName + ' ' + x.lastName + '\n';
+      holdCurrentSpouse += spouseName;
+    } 
+  });
+//SIBLINGS
+
+  MostWanted.currentPerson.map(function(x){
+    if(x.parents.length === 2){
+      var parentOne = x.parents[0];
+      var parentTwo = x.parents[1];
+    }
+
+     else if(x.parents.length === 1){
+      var parentOne = x.parents[0];
+    }
+});
+  var siblingsFromParentOne = data.filter(x => x.parents[0] === parentOne);
+
+  var siblingsFromParentTwo = data.filter(x => x.parents[1] === parentTwo);
+}
+
 
 function displayPerson(){
   var person = MostWanted.currentPerson;
@@ -138,7 +195,6 @@ function displayPerson(){
   alert(personAttributes);
   mainMenu();
 }
-
 
 function promptFor(question, valid){
   do{
@@ -186,6 +242,7 @@ function searchByTrait(){
       //for (var i = 0; i < MostWanted.searchByEyes.length; i++) {
 
       //futureAlert += MostWanted.searchByEyes[i]
+
     break;
 		case 'height':
 			var heightEntered = prompt("Enter the person's height (Number only)");
@@ -256,6 +313,7 @@ function searchByTrait(){
 		break;
 		case 'age':
 			var personsAge = parseInt(prompt("Enter the person's age."));
+
       databaseAge(personsAge);
 
 		break;
