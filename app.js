@@ -186,10 +186,6 @@ function searchByTrait(){
       //for (var i = 0; i < MostWanted.searchByEyes.length; i++) {
 
       //futureAlert += MostWanted.searchByEyes[i]
-<<<<<<< HEAD
-
-=======
->>>>>>> 46849cd8205cc092f6b6dd0ecce6ad2fdb7033de
     break;
 		case 'height':
 			var heightEntered = prompt("Enter the person's height (Number only)");
@@ -259,7 +255,7 @@ function searchByTrait(){
 
 		break;
 		case 'age':
-			var.personsAge = prompt("Enter the person's age.");
+			var personsAge = parseInt(prompt("Enter the person's age."));
       databaseAge(personsAge);
 
 		break;
@@ -269,41 +265,7 @@ function searchByTrait(){
 	}
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function databaseAge(){
+function databaseAge(personsAge){
  var dob = [];
  var birthday = data.map(function (x){
   dobNew = x.dob;
@@ -315,18 +277,42 @@ function databaseAge(){
     birthday = dob[i];
     var birthdayMilliseconds = Date.parse(birthday);
     var currentDateMilliseconds = Date.now();
-    var dateCalculated;
     var millisecondsInYear = 31556952000;
     
-      dateCalculated = currentDateMilliseconds - birthdayMilliseconds;
+    var  dateCalculated = currentDateMilliseconds - birthdayMilliseconds;
 
-  var calculatedYear = Math.floor(dateCalculated / millisecondsInYear);
+    var calculatedYear = Math.floor(dateCalculated / millisecondsInYear);
+
   findPersonAge(calculatedYear, personsAge);
   }
 
 }
 
-function findPersonAge(){
+function findPersonAge(dataYear, UserYear){
+  var dob = [];
+ var birthday = data.map(function (x){
+  dobNew = x.dob;
+  dob.push(dobNew);
+ });
+
+ var currentDate = new Date();
+ var currentDay = currentDate.getDate();
+ var currentMonth = currentDate.getMonth() + 1;
+
+// variable birthday (aka the age) assumes it is december 31st, current year/ birthday has already passed
+// if dataMonth <= currentMonth --> if dataDay <= currentDay --> dataYear--
+
+ var monthAndDate = [];
+
+  for (var i = 0; i < dob.length; i++){
+    birthday = dob[i];
+
+    monthAndDate.push(birthday.split("/"));
+  }
+
+console.log(monthAndDate);
+
+
 
 }
-// Create a function to compare CalculatedYear for both month and day
+// Create a function to compare calculatedYear for both month and day
