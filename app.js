@@ -38,6 +38,7 @@ function mainMenu(){
     // TODO: get person's family
     break;
     case "descendants":
+      displayDescendants();
     // TODO: get person's descendants
     break;
     case "restart":
@@ -54,16 +55,16 @@ function searchByName(){
   //IS CASE SESITIVE
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
-
+  /*
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
-    return results[0];
-
+    results[0];
+*/
     /*if(){
       displayPerson(person, testOne);
     }*/
 
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
-    MostWanted.currentPerson = results[0];
+    MostWanted.currentPerson = results;
     mainMenu();
 /*
     var results = data.filter(function(el){
@@ -81,58 +82,45 @@ function searchByName(){
 
 
 
+function displayDescendants(){
 
+ MostWanted.currentPerson.map(function(x){
+  currentPersonId = x.id; 
+ });
 
+var alertOfDescendants = ''; 
+  data.map(function(x){
+    if(x.parents.length === 2){
+      var parentOne = x.parents[0];
+      var parentTwo = x.parents[1];
+    }
 
+    else if(x.parents.length === 1){
+      var parentOne = x.parents[0];
+    }
 
+    if(currentPersonId === parentOne){
+      var childOneName = x.firstName + ' ' + x.lastName;
+      alertOfDescendants += childOneName + '\n';
+    }
+    if(currentPersonId === parentTwo){
+      var childTwoName = x.firstName + ' ' + x.lastName;
+      alertOfDescendants += childTwoName + '\n';
+    }
 
+    //return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  });//.join("\n"));
+  alert(alertOfDescendants);
+}
+/*
+>>>>>>> 46849cd8205cc092f6b6dd0ecce6ad2fdb7033de
 function displayPeople(people){
   alert(people.map(function(person){
     return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
 
   }).join("\n"));
-}
+}*/
 
 function displayPerson(){
   var person = MostWanted.currentPerson;
@@ -198,7 +186,10 @@ function searchByTrait(){
       //for (var i = 0; i < MostWanted.searchByEyes.length; i++) {
 
       //futureAlert += MostWanted.searchByEyes[i]
+<<<<<<< HEAD
 
+=======
+>>>>>>> 46849cd8205cc092f6b6dd0ecce6ad2fdb7033de
     break;
 		case 'height':
 			var heightEntered = prompt("Enter the person's height (Number only)");
@@ -268,10 +259,8 @@ function searchByTrait(){
 
 		break;
 		case 'age':
-			var personsAge = prompt("Enter the person's age.");
-      databaseAge();
-
-
+			var.personsAge = prompt("Enter the person's age.");
+      databaseAge(personsAge);
 
 		break;
 		default:
@@ -279,6 +268,40 @@ function searchByTrait(){
 		app();
 	}
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function databaseAge(){
  var dob = [];
@@ -298,9 +321,12 @@ function databaseAge(){
       dateCalculated = currentDateMilliseconds - birthdayMilliseconds;
 
   var calculatedYear = Math.floor(dateCalculated / millisecondsInYear);
-
+  findPersonAge(calculatedYear, personsAge);
   }
 
 }
 
+function findPersonAge(){
+
+}
 // Create a function to compare CalculatedYear for both month and day
