@@ -1,6 +1,6 @@
 var MostWanted = {};
 
-function app(person){
+function app(){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
@@ -80,6 +80,53 @@ function searchByName(){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function displayPeople(people){
   alert(people.map(function(person){
     return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
@@ -152,22 +199,6 @@ function searchByTrait(){
 
       //futureAlert += MostWanted.searchByEyes[i]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     break;
 		case 'height':
 			var heightEntered = prompt("Enter the person's height (Number only)");
@@ -192,7 +223,7 @@ function searchByTrait(){
 
 		break;
 		case 'weight':
-			var weightEntered = prompt("Enter the person's weight");
+			var weightEntered = prompt("Enter the person's weight (Number only)");
 			var weightResult = data.filter(x => x.weight == weightEntered);
 			MostWanted.searchByWeight = weightResult;
 
@@ -237,12 +268,9 @@ function searchByTrait(){
 
 		break;
 		case 'age':
-			MostWanted.personsAge = prompt("Enter the person's age.");
-      calculateAge();42
+			var personsAge = prompt("Enter the person's age.");
+      databaseAge();
 
-			/*var ageResult = data.filter(x => x.dob === );
-			MostWanted.searchByBirthDate = ageResult;
-      findAge();*/
 
 
 		break;
@@ -252,72 +280,27 @@ function searchByTrait(){
 	}
 } 
 
-function calculateAge() {
-  var dob = [];
-  var birthday = data.map(function (x){
+function databaseAge(){
+ var dob = [];
+ var birthday = data.map(function (x){
+  dobNew = x.dob;
+  dob.push(dobNew);
+ });
+
+
+  for (var i = 0; i < dob.length; i++){
+    birthday = dob[i];
+    var birthdayMilliseconds = Date.parse(birthday);
+    var currentDateMilliseconds = Date.now();
+    var dateCalculated;
+    var millisecondsInYear = 31556952000;
     
-    dobNew = x.dob;
-    dob.push(dobNew);
-    
-    
-  });
-  for (var i = 0; i < dob.length; i++) {
-    birthday = dob[i]
-    var ageDifMs = Date.now();
-    var ageDate = new Date(ageDifMs); 
-    MostWanted.testOne = Math.abs(ageDate.getUTCFullYear() - 1970);
+      dateCalculated = currentDateMilliseconds - birthdayMilliseconds;
+
+  var calculatedYear = Math.floor(dateCalculated / millisecondsInYear);
+
   }
+
 }
-//function findAge(){
-//    var currentDate = prompt("Enter the current date (Ex: 04/08/2017)");
 
-
-  
-     /*var calander = currentDate.split('/');
-  
-     MostWanted.userMonth = calander[0];
-     MostWanted.userDate = calander[1];
-     MostWanted.userYear = calander[2];
-  
-     databaseBirthDate(currentDate);*/
-  
-// } 
- 
- 
-/* function databaseBirthDate(currentDate){
- 
-       // var  testOne = data.filter(x => x.dob === x.dob);
-
-      var dobArray  = [];
- 
-      var testTwo = data.map(function(x){
-          var dateOfBirth = x.dob;
-          dobArray.push(dateOfBirth);
-      });
-
-       var dataBirthDate = dobArray.split('/');
- 
-       MostWanted.dataMonth = dataBirthDate[0];
-       MostWanted.dataDate = dataBirthDate[1];
-       MostWanted.dataYear = dataBirthDate[2];
- 
-     calculateDateOfBirth();
- }
- 
- function calculateDateOfBirth(){
- 
-    var age = MostWanted.userYear - MostWanted.dataYear;
- 
-    if (MostWanted.userMonth >= MostWanted.dataMonth){
-      if (MostWanted.userDate >= MostWanted.dataDate){
-        age++;
-       return age;
-      }
-    }
-    else{
-      return age;
-    }
-   }*/ 
-
-  
- 
+// Create a function to compare CalculatedYear for both month and day
