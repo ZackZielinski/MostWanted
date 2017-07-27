@@ -342,4 +342,68 @@ function searchByTrait(){
       app();
 
 		break;
-		
+
+		case 'age':
+			var userAge = parseInt(prompt("Enter the person's age."));
+      databaseAge();
+
+      var ageResult = data.filter(x => x.age == userAge);
+      MostWanted.searchByAge = ageResult;
+
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByAge.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByAge.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
+
+		break;
+		default:
+		alert("Sorry, that is not a valid character trait. Please try again");
+		app();
+	}
+} 
+
+function databaseAge(){
+ var age = [];
+ var dob = [];
+ var birthday = data.map(function (x){
+  dobNew = x.dob;
+  dob.push(dobNew);
+ });
+ 
+  for (var i = 0; i < dob.length; i++){
+    birthday = dob[i];
+    var birthdayMilliseconds = Date.parse(birthday);
+    var currentDateMilliseconds = Date.now();
+    var millisecondsInYear = 31556952000;
+    
+    var  dateCalculated = currentDateMilliseconds - birthdayMilliseconds;
+
+    var calculatedAge = Math.floor(dateCalculated / millisecondsInYear);
+
+    birthday.split('/');
+
+    var currentDate = new Date();
+    var currentDay = currentDate.getDate();
+    var currentMonth = currentDate.getMonth() + 1;
+
+    if (birthday[0] === currentMonth){
+         if (birthday[1] > currentDay){
+            calculatedAge--;
+         }
+    }
+
+    data[i].age = calculatedAge;
+  }
+}
+
