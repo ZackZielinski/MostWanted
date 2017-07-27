@@ -1,7 +1,7 @@
 var MostWanted = {};
 
 function app(){
-  var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  var searchType = promptFor("Do you know the name of the person you are looking for?\n Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
       var currentPerson = searchByName();
@@ -26,25 +26,25 @@ function mainMenu(currentPerson){
     return app(); // restart
   }
 
-  var displayOption = prompt("Found " + currentPerson[0].firstName + " " + currentPerson[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + currentPerson[0].firstName + " " + currentPerson[0].lastName + " . Do you want to know their\n 1 = Info\n 2 = Family\n 3 = Descendants\n 4 = Restart\n 5 = Quit");
 
   switch(displayOption){
-    case "info":
+    case "1":
      displayPerson();
     // TODO: get person's info
     break;
-    case "family":
+    case "2":
       displayFamily();
     // TODO: get person's family
     break;
-    case "descendants":
+    case "3":
       displayDescendants();
     // TODO: get person's descendants
     break;
-    case "restart":
+    case "4":
     app(); // restart
     break;
-    case "quit":
+    case "5":
     return; // stop execution
     default:
     return mainMenu(); // ask again
@@ -246,12 +246,37 @@ function chars(input){
 
 function searchByTrait(){
 
-	var trait = prompt("What do you know of the person? Enter age, eye color, height, weight or occupation");
+	var trait = prompt("What do you know of the person?\n 1 = Age \n 2 = Eye color\n 3 = Height\n 4 = Weight\n 5 = Occupation");
 
 	switch (trait){
 
-		case 'eye color':
-			var eyeColor = prompt("Enter color of the person's eyes (black, blue, brown, green, or hazel)");
+    case '1':
+      var userAge = parseInt(prompt("Enter the person's age."));
+      databaseAge();
+
+      var ageResult = data.filter(x => x.age == userAge);
+      MostWanted.searchByAge = ageResult;
+
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByAge.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByAge.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
+
+    break;
+
+		case '2':
+			var eyeColor = prompt("Enter color of the person's eyes\n 1 = black\n 2 = blue\n 3 = brown\n 4 = green\n 5 = hazel");
 			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
 			MostWanted.searchByEyes = eyeResult;
      
@@ -275,7 +300,7 @@ function searchByTrait(){
       //futureAlert += MostWanted.searchByEyes[i]
 
     break;
-		case 'height':
+		case '3':
 			var heightEntered = prompt("Enter the person's height (Number only)");
 			var heightResult = data.filter(x => x.height == heightEntered);
 			MostWanted.searchByHeight = heightResult;
@@ -297,7 +322,7 @@ function searchByTrait(){
       app();
 
 		break;
-		case 'weight':
+		case '4':
 			var weightEntered = prompt("Enter the person's weight (Number only)");
 			var weightResult = data.filter(x => x.weight == weightEntered);
 			MostWanted.searchByWeight = weightResult;
@@ -320,7 +345,7 @@ function searchByTrait(){
 
 
 		break;
-		case 'occupation':
+		case '5':
 			var employment = prompt("Enter the person's occupation");
 			var employmentResult = data.filter(x => x.occupation === employment);
 			MostWanted.searchByOccupation = employmentResult;
@@ -342,70 +367,11 @@ function searchByTrait(){
       app();
 
 		break;
-
-		case 'age':
-			var userAge = parseInt(prompt("Enter the person's age."));
-      databaseAge();
-
-      var ageResult = data.filter(x => x.age == userAge);
-      MostWanted.searchByAge = ageResult;
-
-      var futureAlert = '';
-      var i = 0;
-     //MAP
-      MostWanted.searchByAge.map(function(x){
-        var firstName = x.firstName;
-        var lastName = x.lastName;
-        var fullName = firstName + ' ' + lastName + '\n';
-        futureAlert += fullName;
-        i++
-          if(i === MostWanted.searchByAge.length){
-            return futureAlert;
-          } 
-      });
-      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
-      app();
-
-		break;
 		default:
 		alert("Sorry, that is not a valid character trait. Please try again");
 		app();
 	}
 } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function databaseAge(){
  var age = [];
