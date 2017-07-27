@@ -341,6 +341,40 @@ function searchByTrait(){
 	}
 } 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function databaseAge(){
  var age = [];
  var dob = [];
@@ -374,5 +408,3 @@ function databaseAge(){
     data[i].age = calculatedAge;
   }
 }
-
-// isnpjhjowjohjpijfhroijkihpoifhpifh
