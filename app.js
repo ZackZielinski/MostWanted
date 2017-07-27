@@ -373,6 +373,40 @@ function searchByTrait(){
 	}
 } 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function databaseAge(){
  var age = [];
  var dob = [];
