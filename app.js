@@ -111,7 +111,7 @@ var alertOfDescendants = '';
 
   });//.join("\n"));
   alert(alertOfDescendants);
-  mainMenu();
+  mainMenu(MostWanted.currentPerson);
 }
 /*
 function displayPeople(people){
@@ -372,40 +372,6 @@ function searchByTrait(){
 		app();
 	}
 } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function databaseAge(){
  var age = [];
