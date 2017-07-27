@@ -4,7 +4,8 @@ function app(){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
-      MostWanted.currentPerson = searchByName();
+      var currentPerson = searchByName();
+      mainMenu(currentPerson);
     break;
     case 'no':
 
@@ -18,16 +19,14 @@ function app(){
 }
 
 // Menu function to call once you find who you are looking for
-function mainMenu(){
-
+function mainMenu(currentPerson){
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
-
-  if(!MostWanted.currentPerson){
+  if(currentPerson.length === 0){
     alert("Could not find that individual.");
     return app(); // restart
   }
 
-  var displayOption = prompt("Found " + MostWanted.currentPerson.firstName + " " + MostWanted.currentPerson.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + currentPerson[0].firstName + " " + currentPerson[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
@@ -35,7 +34,7 @@ function mainMenu(){
     // TODO: get person's info
     break;
     case "family":
-    displayFamily();
+      displayFamily();
     // TODO: get person's family
     break;
     case "descendants":
@@ -66,7 +65,7 @@ function searchByName(){
 
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
     MostWanted.currentPerson = results;
-    mainMenu();
+    return results;
 /*
     var results = data.filter(function(el){
       
@@ -112,6 +111,7 @@ var alertOfDescendants = '';
 
   });//.join("\n"));
   alert(alertOfDescendants);
+  mainMenu();
 }
 /*
 function displayPeople(people){
@@ -127,7 +127,7 @@ function displayFamily(){
     currentPersonId = x.id; 
  });
 
-var stringOfDescendants = ''; 
+var stringOfDescendants = 'CHILDREN:' + '\n'; 
   data.map(function(x){
     if(x.parents.length === 2){
       var parentOne = x.parents[0];
@@ -153,7 +153,7 @@ var stringOfDescendants = '';
     currentSpouseId = x.currentSpouse;
   });
 
-var holdCurrentSpouse = '';
+var holdCurrentSpouse = 'CURRENT SPOUSE:' + '\n';
   data.map(function(x){
     var currentSpouse = x.id;
     if(currentSpouseId == currentSpouse){
@@ -162,25 +162,56 @@ var holdCurrentSpouse = '';
     } 
   });
 //SIBLINGS
-
+var parentOne;
+var parentTwo;
   MostWanted.currentPerson.map(function(x){
     if(x.parents.length === 2){
-      var parentOne = x.parents[0];
-      var parentTwo = x.parents[1];
+      parentOne = x.parents[0];
+      parentTwo = x.parents[1];
     }
 
      else if(x.parents.length === 1){
-      var parentOne = x.parents[0];
+      parentOne = x.parents[0];
+    }
+
+    else{
+      parentOne = 'noParents'
+      parentTwo = 'noParents'
     }
 });
-  var siblingsFromParentOne = data.filter(x => x.parents[0] === parentOne);
+  var childrenFromParents = [];
+  childrenFromParents = data.filter(x => x.parents[0] === parentOne);
 
-  var siblingsFromParentTwo = data.filter(x => x.parents[1] === parentTwo);
+  childrenFromParents = data.filter(x => x.parents[1] === parentTwo);
+
+  var siblingsFromParents
+  siblingsFromParents = childrenFromParents.filter(x => x !== MostWanted.currentPerson[0]);
+
+  var siblingsFromParentsString = 'SIBLINGS:' + '\n';
+  for (var i = 0; i = siblingsFromParents.length; i++) {
+    var getWholeObject = siblingsFromParents.pop()
+    var getName = getWholeObject.firstName + ' ' + getWholeObject.lastName + '\n';
+    siblingsFromParentsString += getName;
+
+  }
+//PARENTS
+  var wholeParents = '';
+  wholeParents = data.filter(x => x.id === parentOne || x.id === parentTwo);
+
+  //wholeParents = data.filter(x => x.id === MostWanted.parentTwo);
+
+  var wholeParentsString = 'PARENTS:' + '\n';
+  for (var i = 0; i = wholeParents.length; i++) {
+    var getWholeObject = wholeParents.pop()
+    var getName = getWholeObject.firstName + ' ' + getWholeObject.lastName + '\n';
+    wholeParentsString += getName;
+  }
+  alert(stringOfDescendants + '\n' + holdCurrentSpouse + '\n' + siblingsFromParentsString + '\n' + wholeParentsString);
+  mainMenu(MostWanted.currentPerson);
 }
 
-
 function displayPerson(){
-  var person = MostWanted.currentPerson;
+  var person = MostWanted.currentPerson[0];
   var personAttributes = "Gender: " + person.gender + "\n";
   personAttributes += "Date of birth: " + person.dob + "\n";
   personAttributes += "Height: " + person.height + "\n";
@@ -193,7 +224,7 @@ function displayPerson(){
   
   alert(personInfo);
   alert(personAttributes);
-  mainMenu();
+  mainMenu(MostWanted.currentPerson);
 }
 
 function promptFor(question, valid){
