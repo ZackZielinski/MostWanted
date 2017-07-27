@@ -343,9 +343,27 @@ function searchByTrait(){
 
 		break;
 		case 'age':
-			var personsAge = parseInt(prompt("Enter the person's age."));
+			var userAge = parseInt(prompt("Enter the person's age."));
+      databaseAge();
 
-      databaseAge(personsAge);
+      var ageResult = data.filter(x => x.age == userAge);
+      MostWanted.searchByAge = ageResult;
+
+      var futureAlert = '';
+      var i = 0;
+     //MAP
+      MostWanted.searchByAge.map(function(x){
+        var firstName = x.firstName;
+        var lastName = x.lastName;
+        var fullName = firstName + ' ' + lastName + '\n';
+        futureAlert += fullName;
+        i++
+          if(i === MostWanted.searchByAge.length){
+            return futureAlert;
+          } 
+      });
+      alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
+      app();
 
 		break;
 		default:
@@ -354,14 +372,14 @@ function searchByTrait(){
 	}
 } 
 
-function databaseAge(personsAge){
+function databaseAge(){
+ var age = [];
  var dob = [];
  var birthday = data.map(function (x){
   dobNew = x.dob;
   dob.push(dobNew);
  });
-
-
+ 
   for (var i = 0; i < dob.length; i++){
     birthday = dob[i];
     var birthdayMilliseconds = Date.parse(birthday);
@@ -370,38 +388,20 @@ function databaseAge(personsAge){
     
     var  dateCalculated = currentDateMilliseconds - birthdayMilliseconds;
 
-    var calculatedYear = Math.floor(dateCalculated / millisecondsInYear);
+    var calculatedAge = Math.floor(dateCalculated / millisecondsInYear);
 
-  findPersonAge(calculatedYear, personsAge);
+    birthday.split('/');
+
+    var currentDate = new Date();
+    var currentDay = currentDate.getDate();
+    var currentMonth = currentDate.getMonth() + 1;
+
+    if (birthday[0] === currentMonth){
+         if (birthday[1] > currentDay){
+            calculatedAge--;
+         }
+    }
+
+    data[i].age = calculatedAge;
   }
-
 }
-
-function findPersonAge(dataYear, UserYear){
-  var dob = [];
- var birthday = data.map(function (x){
-  dobNew = x.dob;
-  dob.push(dobNew);
- });
-
- var currentDate = new Date();
- var currentDay = currentDate.getDate();
- var currentMonth = currentDate.getMonth() + 1;
-
-// variable birthday (aka the age) assumes it is december 31st, current year/ birthday has already passed
-// if dataMonth <= currentMonth --> if dataDay <= currentDay --> dataYear--
-
- var monthAndDate = [];
-
-  for (var i = 0; i < dob.length; i++){
-    birthday = dob[i];
-
-    monthAndDate.push(birthday.split("/"));
-  }
-
-console.log(monthAndDate);
-
-
-
-}
-// Create a function to compare calculatedYear for both month and day
