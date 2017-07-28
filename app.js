@@ -10,21 +10,20 @@ function app(){
     case 'no':
       MostWanted.data = data;
       MostWanted.searchTrait = searchByTrait();
-    // TODO: search by traits
+    
     break;
     default:
-    app(people); // restart app
+    app(people); 
     break;
   }
 }
 
-// Menu function to call once you find who you are looking for
+
 function mainMenu(currentPerson){
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+  
   if(!currentPerson){
     alert("Could not find that individual.");
-    return app(); // restart
-  }
+    return app(); 
 
   var displayOption = prompt("Found " + currentPerson.firstName + " " + currentPerson.lastName + " . Do you want to know their\n 1 = Info\n 2 = Family\n 3 = Descendants\n 4 = Restart\n 5 = Quit");
   
@@ -32,65 +31,41 @@ function mainMenu(currentPerson){
   switch(displayOption){
     case "1":
      displayPerson();
-    // TODO: get person's info
+    
     break;
     case "2":
       displayFamily(MostWanted.currentPerson);
-    // TODO: get person's family
+    
     break;
     case "3":
       MostWanted.DescendantsList = '';
       displayDescendants(MostWanted.currentPerson);
-      //print here
+      
       alert(MostWanted.DescendantsList);
       mainMenu(MostWanted.currentPerson);
-    // TODO: get person's descendants
+    
     break;
     case "4":
-    app(); // restart
+    app(); 
     break;
     case "5":
-    return; // stop execution
+    return; 
     default:
-    return mainMenu(); // ask again
+    return mainMenu(); 
   }
 }
 
 function searchByName(){
-  //IS CASE SESITIVE
+  
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
-  /*
-    var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
-    results[0];
-*/
-    /*if(){
-      displayPerson(person, testOne);
-    }*/
+  
 
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
     MostWanted.currentPerson = results[0];
     return results;
-/*
-    var results = data.filter(function(el){
-      
-        if(el.firstName === firstName && el.lastName === lastName){
-          return true;
-        }
-        else{
-          return false;
-        }
-    });
-    var tempPerson = results[0];*/
-  // TODO: find the person using the name they entered
-}
 
-/*function getCurrentPersonId(){
-MostWanted.currentPerson;
-var testOne = MostWanted.currentPerson.map(function(x){
-  return x.id; 
- });
-}*/
+}
 
 function displayDescendants(person){
 
@@ -123,60 +98,10 @@ var arrayOfDescendants = [];
     }  
   }
 }    
-    //if(alertOfDescendants !== ''){
-
-    //}
-      
    
-   /* if(data[i].parents.length > 0){
-    
-      if(testTwo === parentOne || testTwo === parentTwo){
-
-      }
-
-    /*
-      var filteredChildren = data.filter(function(x){
-        if(testTwo === parentOne ||  testTwo === parentTwo){
-          return true;
-        }
-        else{
-          return false;
-        }
-      });
-    }*/
-    
-  
-
-
- /* data.map(function(x){
-    if(filteredChildren === MostWanted.parentOne || filteredChildren === MostWanted.parentTwo){
-      var childOneName = x.firstName + ' ' + x.lastName;
-      alertOfDescendants += childOneName + '\n';
-    }
-  
-      if(filteredChildren.length > 0){
-      displayDescendants()
-      }
-      else{
-        return;
-      }
-  });
-    //return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
-
-//.join("\n"));
-  alert(alertOfDescendants);
-  mainMenu(MostWanted.currentPerson);
-}
-/*
-function displayPeople(people){
-  alert(people.map(function(person){
-    return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
-
-  }).join("\n"));
-}*/
 
 function displayFamily(person){
-//CHILDREN
+
 
 var stringOfDescendants = 'CHILDREN:' + '\n'; 
   data.map(function(x){
@@ -198,7 +123,7 @@ var stringOfDescendants = 'CHILDREN:' + '\n';
       stringOfDescendants += childTwoName + '\n';
     }
   });
-//SPOUSE
+
 
 
 var holdCurrentSpouse = 'CURRENT SPOUSE:' + '\n';
@@ -208,7 +133,7 @@ var holdCurrentSpouse = 'CURRENT SPOUSE:' + '\n';
       holdCurrentSpouse += spouseName;
     } 
   });
-//SIBLINGS
+
 var parentOne = person.parents[0];
 var parentTwo = person.parents[1];
   if(!parentOne){
@@ -231,11 +156,11 @@ var parentTwo = person.parents[1];
     siblingsFromParentsString += getName;
 
   }
-//PARENTS
+
   var wholeParents = '';
   wholeParents = data.filter(x => x.id === parentOne || x.id === parentTwo);
 
-  //wholeParents = data.filter(x => x.id === MostWanted.parentTwo);
+
 
   var wholeParentsString = 'PARENTS:' + '\n';
   for (var i = 0; i = wholeParents.length; i++) {
@@ -314,7 +239,7 @@ function searchByTrait(){
 
       var futureAlert = '';
       var i = 0;
-     //MAP
+     
       MostWanted.searchByAge.map(function(x){
         var firstName = x.firstName;
         var lastName = x.lastName;
@@ -338,7 +263,7 @@ function searchByTrait(){
      
       var futureAlert = '';
       var i = 0;
-     //MAP
+     
       MostWanted.searchByEyes.map(function(x){
         var firstName = x.firstName;
         var lastName = x.lastName;
@@ -351,9 +276,7 @@ function searchByTrait(){
       });
       alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
       chooseMultipleTraits();
-      //for (var i = 0; i < MostWanted.searchByEyes.length; i++) {
-
-      //futureAlert += MostWanted.searchByEyes[i]
+    
 
     break;
 		case '3':
@@ -364,7 +287,7 @@ function searchByTrait(){
 
       var futureAlert = '';
       var i = 0;
-     //MAP
+     
       MostWanted.searchByHeight.map(function(x){
         var firstName = x.firstName;
         var lastName = x.lastName;
@@ -387,7 +310,7 @@ function searchByTrait(){
 
       var futureAlert = '';
       var i = 0;
-     //MAP
+     
       MostWanted.searchByWeight.map(function(x){
         var firstName = x.firstName;
         var lastName = x.lastName;
@@ -411,7 +334,7 @@ function searchByTrait(){
 
       var futureAlert = '';
       var i = 0;
-     //MAP
+     
       MostWanted.searchByOccupation.map(function(x){
         var firstName = x.firstName;
         var lastName = x.lastName;
