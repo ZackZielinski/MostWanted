@@ -4,11 +4,11 @@ function app(){
   var searchType = promptFor("Do you know the name of the person you are looking for?\n Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
-      var currentPerson = searchByName();
-      mainMenu(currentPerson);
+      searchByName();
+      mainMenu(MostWanted.currentPerson);
     break;
     case 'no':
-
+      MostWanted.data = data;
       MostWanted.searchTrait = searchByTrait();
     // TODO: search by traits
     break;
@@ -21,24 +21,29 @@ function app(){
 // Menu function to call once you find who you are looking for
 function mainMenu(currentPerson){
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
-  if(currentPerson.length === 0){
+  if(!currentPerson){
     alert("Could not find that individual.");
     return app(); // restart
   }
 
-  var displayOption = prompt("Found " + currentPerson[0].firstName + " " + currentPerson[0].lastName + " . Do you want to know their\n 1 = Info\n 2 = Family\n 3 = Descendants\n 4 = Restart\n 5 = Quit");
-
+  var displayOption = prompt("Found " + currentPerson.firstName + " " + currentPerson.lastName + " . Do you want to know their\n 1 = Info\n 2 = Family\n 3 = Descendants\n 4 = Restart\n 5 = Quit");
+  
+  
   switch(displayOption){
     case "1":
      displayPerson();
     // TODO: get person's info
     break;
     case "2":
-      displayFamily();
+      displayFamily(MostWanted.currentPerson);
     // TODO: get person's family
     break;
     case "3":
-      displayDescendants();
+      MostWanted.DescendantsList = '';
+      displayDescendants(MostWanted.currentPerson);
+      //print here
+      alert(MostWanted.DescendantsList);
+      mainMenu(MostWanted.currentPerson);
     // TODO: get person's descendants
     break;
     case "4":
@@ -64,7 +69,7 @@ function searchByName(){
     }*/
 
     var results = data.filter(x => x.firstName === firstName && x.lastName === lastName);
-    MostWanted.currentPerson = results;
+    MostWanted.currentPerson = results[0];
     return results;
 /*
     var results = data.filter(function(el){
@@ -80,14 +85,16 @@ function searchByName(){
   // TODO: find the person using the name they entered
 }
 
-
-
-function displayDescendants(){
- MostWanted.currentPerson.map(function(x){
-  currentPersonId = x.id; 
+/*function getCurrentPersonId(){
+MostWanted.currentPerson;
+var testOne = MostWanted.currentPerson.map(function(x){
+  return x.id; 
  });
+}*/
 
-var alertOfDescendants = ''; 
+function displayDescendants(person){
+
+var arrayOfDescendants = []; 
   data.map(function(x){
     if(x.parents.length === 2){
       var parentOne = x.parents[0];
@@ -98,18 +105,65 @@ var alertOfDescendants = '';
       var parentOne = x.parents[0];
     }
 
-    if(currentPersonId === parentOne){
+    if(person.id === parentOne){
+      var childOneName = x;
+      arrayOfDescendants.push(childOneName);
+    }
+    if(person.id === parentTwo){
+      var childTwoName = x;
+      arrayOfDescendants.push(childTwoName);
+    }
+  });
+
+  if(arrayOfDescendants.length > 0){
+    for (var i = 0; i < arrayOfDescendants.length; i++) {
+      MostWanted.DescendantsList += arrayOfDescendants[i].firstName + " " + arrayOfDescendants[i].lastName + "\n";
+      displayDescendants(arrayOfDescendants[i]);
+
+    }  
+  }
+}    
+    //if(alertOfDescendants !== ''){
+
+    //}
+      
+   
+   /* if(data[i].parents.length > 0){
+    
+      if(testTwo === parentOne || testTwo === parentTwo){
+
+      }
+
+    /*
+      var filteredChildren = data.filter(function(x){
+        if(testTwo === parentOne ||  testTwo === parentTwo){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+    }*/
+    
+  
+
+
+ /* data.map(function(x){
+    if(filteredChildren === MostWanted.parentOne || filteredChildren === MostWanted.parentTwo){
       var childOneName = x.firstName + ' ' + x.lastName;
       alertOfDescendants += childOneName + '\n';
     }
-    if(currentPersonId === parentTwo){
-      var childTwoName = x.firstName + ' ' + x.lastName;
-      alertOfDescendants += childTwoName + '\n';
-    }
-
+  
+      if(filteredChildren.length > 0){
+      displayDescendants()
+      }
+      else{
+        return;
+      }
+  });
     //return MostWanted________.firstName + ' ' + MostWanted__________.lastName;
 
-  });//.join("\n"));
+//.join("\n"));
   alert(alertOfDescendants);
   mainMenu(MostWanted.currentPerson);
 }
@@ -121,11 +175,8 @@ function displayPeople(people){
   }).join("\n"));
 }*/
 
-function displayFamily(){
+function displayFamily(person){
 //CHILDREN
-  MostWanted.currentPerson.map(function(x){
-    currentPersonId = x.id; 
- });
 
 var stringOfDescendants = 'CHILDREN:' + '\n'; 
   data.map(function(x){
@@ -138,54 +189,40 @@ var stringOfDescendants = 'CHILDREN:' + '\n';
       var parentOne = x.parents[0];
     }
 
-    if(currentPersonId === parentOne){
+    if(person.id === parentOne){
       var childOneName = x.firstName + ' ' + x.lastName;
       stringOfDescendants += childOneName + '\n';
     }
-    if(currentPersonId === parentTwo){
+    if(person.id === parentTwo){
       var childTwoName = x.firstName + ' ' + x.lastName;
       stringOfDescendants += childTwoName + '\n';
     }
   });
 //SPOUSE
 
-  MostWanted.currentPerson.map(function(x){
-    currentSpouseId = x.currentSpouse;
-  });
 
 var holdCurrentSpouse = 'CURRENT SPOUSE:' + '\n';
   data.map(function(x){
-    var currentSpouse = x.id;
-    if(currentSpouseId == currentSpouse){
+    if(person.currentSpouse == x.id){
       var spouseName = x.firstName + ' ' + x.lastName + '\n';
       holdCurrentSpouse += spouseName;
     } 
   });
 //SIBLINGS
-var parentOne;
-var parentTwo;
-  MostWanted.currentPerson.map(function(x){
-    if(x.parents.length === 2){
-      parentOne = x.parents[0];
-      parentTwo = x.parents[1];
+var parentOne = person.parents[0];
+var parentTwo = person.parents[1];
+  if(!parentOne){
+      parentOne = 'noParents';
     }
+  if(!parentTwo){
+    parentTwo = 'noParents';
+  }
 
-     else if(x.parents.length === 1){
-      parentOne = x.parents[0];
-    }
-
-    else{
-      parentOne = 'noParents'
-      parentTwo = 'noParents'
-    }
-});
   var childrenFromParents = [];
-  childrenFromParents = data.filter(x => x.parents[0] === parentOne);
-
-  childrenFromParents = data.filter(x => x.parents[1] === parentTwo);
+  childrenFromParents = data.filter(x => x.parents[0] === parentOne || x.parents[1] === parentOne || x.parents[0] === parentTwo || x.parents[1] === parentTwo);
 
   var siblingsFromParents
-  siblingsFromParents = childrenFromParents.filter(x => x !== MostWanted.currentPerson[0]);
+  siblingsFromParents = childrenFromParents.filter(x => x !== MostWanted.currentPerson);
 
   var siblingsFromParentsString = 'SIBLINGS:' + '\n';
   for (var i = 0; i = siblingsFromParents.length; i++) {
@@ -211,7 +248,7 @@ var parentTwo;
 }
 
 function displayPerson(){
-  var person = MostWanted.currentPerson[0];
+  var person = MostWanted.currentPerson;
   var personAttributes = "Gender: " + person.gender + "\n";
   personAttributes += "Date of birth: " + person.dob + "\n";
   personAttributes += "Height: " + person.height + "\n";
@@ -244,18 +281,36 @@ function chars(input){
   return true;
 }
 
-function searchByTrait(){
+function chooseMultipleTraits(){
+  var multipleTraits = prompt('would you like to refine your search by adding another trait? \n 1 = yes \n 2 = no');
+    switch (multipleTraits){
+      case '1':
+        searchByTrait();
+        break;
 
+      case '2':
+        MostWanted.data = data;
+        app();
+        break;
+
+      default:
+        alert('sorry we did not understand please try entring 1 or 2.');
+        chooseMultipleTraits();
+        break;
+    }
+}
+
+function searchByTrait(){
 	var trait = prompt("What do you know of the person?\n 1 = Age \n 2 = Eye color\n 3 = Height\n 4 = Weight\n 5 = Occupation");
 
 	switch (trait){
-
     case '1':
       var userAge = parseInt(prompt("Enter the person's age."));
       databaseAge();
 
-      var ageResult = data.filter(x => x.age == userAge);
+      var ageResult = MostWanted.data.filter(x => x.age == userAge);
       MostWanted.searchByAge = ageResult;
+      MostWanted.data = MostWanted.searchByAge;
 
       var futureAlert = '';
       var i = 0;
@@ -271,14 +326,15 @@ function searchByTrait(){
           } 
       });
       alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
-      app();
+      chooseMultipleTraits();
 
     break;
 
 		case '2':
-			var eyeColor = prompt("Enter color of the person's eyes\n 1 = black\n 2 = blue\n 3 = brown\n 4 = green\n 5 = hazel");
-			var eyeResult = data.filter(x => x.eyeColor === eyeColor);
+			var eyeColor = prompt("Enter color of the person's eyes\n black\n blue\n brown\n green\n hazel");
+			var eyeResult = MostWanted.data.filter(x => x.eyeColor === eyeColor);
 			MostWanted.searchByEyes = eyeResult;
+      MostWanted.data = MostWanted.searchByEyes; 
      
       var futureAlert = '';
       var i = 0;
@@ -294,7 +350,7 @@ function searchByTrait(){
           } 
       });
       alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
-      app();
+      chooseMultipleTraits();
       //for (var i = 0; i < MostWanted.searchByEyes.length; i++) {
 
       //futureAlert += MostWanted.searchByEyes[i]
@@ -302,8 +358,9 @@ function searchByTrait(){
     break;
 		case '3':
 			var heightEntered = prompt("Enter the person's height (Number only)");
-			var heightResult = data.filter(x => x.height == heightEntered);
+			var heightResult = MostWanted.data.filter(x => x.height == heightEntered);
 			MostWanted.searchByHeight = heightResult;
+      MostWanted.data = MostWanted.searchByHeight;
 
       var futureAlert = '';
       var i = 0;
@@ -319,13 +376,14 @@ function searchByTrait(){
           } 
       });
       alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
-      app();
+      chooseMultipleTraits();
 
 		break;
 		case '4':
 			var weightEntered = prompt("Enter the person's weight (Number only)");
-			var weightResult = data.filter(x => x.weight == weightEntered);
+			var weightResult = MostWanted.data.filter(x => x.weight == weightEntered);
 			MostWanted.searchByWeight = weightResult;
+      MostWanted.data = MostWanted.searchByHeight;
 
       var futureAlert = '';
       var i = 0;
@@ -341,14 +399,15 @@ function searchByTrait(){
           } 
       });
       alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
-      app();
+      chooseMultipleTraits();
 
 
 		break;
 		case '5':
 			var employment = prompt("Enter the person's occupation");
-			var employmentResult = data.filter(x => x.occupation === employment);
+			var employmentResult = MostWanted.data.filter(x => x.occupation === employment);
 			MostWanted.searchByOccupation = employmentResult;
+      MostWanted.data = MostWanted.searchByOccupation;
 
       var futureAlert = '';
       var i = 0;
@@ -364,7 +423,7 @@ function searchByTrait(){
           } 
       });
       alert('here is a list of people meeting the requirments: ' + '\n' + futureAlert);
-      app();
+      chooseMultipleTraits();
 
 		break;
 		default:
