@@ -24,6 +24,7 @@ function mainMenu(currentPerson){
   if(!currentPerson){
     alert("Could not find that individual.");
     return app(); 
+  }
 
   var displayOption = prompt("Found " + currentPerson.firstName + " " + currentPerson.lastName + " . Do you want to know their\n 1 = Info\n 2 = Family\n 3 = Descendants\n 4 = Restart\n 5 = Quit");
   
